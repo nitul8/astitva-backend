@@ -7,7 +7,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const dataFilePath = path.join(__dirname, "drives.json");
 
-// CORS Configuration (Allow only specific origins)
 app.use(
     cors({
         origin: process.env.CLIENT_URL || "*", // Replace with your frontend URL in production
@@ -18,12 +17,10 @@ app.use(
 
 app.use(express.json());
 
-// Ensure drives.json file exists
 if (!fs.existsSync(dataFilePath)) {
     fs.writeFileSync(dataFilePath, JSON.stringify([], null, 4));
 }
 
-// GET Route - Fetch all data
 app.get("/", (req, res) => {
     try {
         const data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
@@ -34,7 +31,6 @@ app.get("/", (req, res) => {
     }
 });
 
-// POST Route - Add a new user
 app.post("/", (req, res) => {
     const {name, email, phone, college, semester} = req.body;
 
@@ -46,7 +42,7 @@ app.post("/", (req, res) => {
         const data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
 
         const newUser = {
-            id: data.length + 1, // Generate unique ID
+            id: data.length + 1,
             fullName: name,
             email,
             phone,
