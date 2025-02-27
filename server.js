@@ -10,7 +10,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
-            "https://astitvafoundation.vercel.app/",
+            "https://astitvafoundation.vercel.app",
         ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
