@@ -2,6 +2,14 @@
     "name": "backend",
     "version": "1.0.0",
     "description": "",
+    "homepage": "https://github.com/nitul8/astitva-backend#readme",
+    "bugs": {
+        "url": "https://github.com/nitul8/astitva-backend/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nitul8/astitva-backend.git"
+    },
     "license": "ISC",
     "author": "",
     "type": "commonjs",
