@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "fullName": "Nitul Das",
+        "email": "ndas6732@gmail.com",
+        "phone": "9864162861",
+        "college": "Jorhat Engineering College",
+        "semester": "6th"
+    },
+    {
+        "id": 2,
+        "fullName": "Nitul Das",
+        "email": "ndas6732@gmail.com",
+        "phone": "09864162861",
+        "college": "JEC",
+        "semester": "6"
+    },
+    {
+        "id": 3,
+        "fullName": "nil",
+        "email": "999@x.com",
+        "phone": "99999",
+        "college": "jec",
+        "semester": "5"
+    },
+    {
+        "id": 1740656491528,
+        "fullName": "Nitul Das",
+        "email": "ndas6732@gmail.com",
+        "phone": "09864162861",
+        "college": "jec",
+        "semester": "6"
+    },
+    {
+        "id": 5,
+        "fullName": "Nitul Das",
+        "email": "ndas6732@gmail.com",
+        "phone": "09864162861",
+        "college": "jec",
+        "semester": "5"
+    },
+    {
+        "id": 6,
+        "fullName": "Nitul Das",
+        "email": "ndas6732@gmail.com",
+        "phone": "09864162861",
+        "college": "jec",
+        "semester": "6"
+    }
+]
