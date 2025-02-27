@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,9 +42,6 @@ const userSchema = new mongoose.Schema(
     },
     {timestamps: true}
 );
-
-require("dotenv").config();
-const mongoose = require("mongoose");
 
 mongoose
     .connect(process.env.MONGO_URI, {
