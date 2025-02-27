@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const {MongoClient, ServerApiVersion} = require("mongodb");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,7 +44,9 @@ const userSchema = new mongoose.Schema(
 );
 
 mongoose
-    .connect("mongodb://127.0.0.1:27017/food-donation")
+    .connect(
+        "mongodb+srv://nituldas:F4Pv8ZuiYA2mbTlu@cluster0.vnrk1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    )
     .then(() => {
         console.log("Connected to MongoDB");
     })
