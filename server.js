@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const {MongoClient, ServerApiVersion} = require("mongodb");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,16 +42,14 @@ const userSchema = new mongoose.Schema(
     {timestamps: true}
 );
 
+require("dotenv").config(); // Load environment variables
 mongoose
-    .connect(
-        "mongodb+srv://nituldas:F4Pv8ZuiYA2mbTlu@cluster0.vnrk1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    )
-    .then(() => {
-        console.log("Connected to MongoDB");
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
     })
-    .catch((error) => {
-        console.error("Error connecting to MongoDB:", error);
-    });
+    .then(() => console.log("✅ Connected to MongoDB Atlas"))
+    .catch((error) => console.error("❌ MongoDB Connection Error:", error));
 
 const User = mongoose.model("user", userSchema);
 
