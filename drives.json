@@ -6,5 +6,13 @@
         "phone": "09864162861",
         "college": "jec",
         "semester": "6"
+    },
+    {
+        "id": 2,
+        "fullName": "Nitul Das",
+        "email": "ndas6732@gmail.com",
+        "phone": "09864162861",
+        "college": "jec",
+        "semester": "6"
     }
 ]

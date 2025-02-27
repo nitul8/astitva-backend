@@ -1,15 +1,14 @@
 const express = require("express");
 const fs = require("fs");
 const cors = require("cors");
-const path = require("path");
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const dataFilePath = path.join(__dirname, "drives.json");
 
 app.use(
     cors({
-        origin: process.env.CLIENT_URL || "*", // Replace with your frontend URL in production
+        origin: process.env.CLIENT_URL || "*",
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
     })
@@ -17,53 +16,81 @@ app.use(
 
 app.use(express.json());
 
-if (!fs.existsSync(dataFilePath)) {
-    fs.writeFileSync(dataFilePath, JSON.stringify([], null, 4));
-}
+const userSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        phone: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        college: {
+            type: String,
+            required: true,
+        },
+        semester: {
+            type: String,
+        },
+    },
+    {timestamps: true}
+);
 
-app.get("/", (req, res) => {
-    try {
-        const data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
-        res.json(data);
-    } catch (error) {
-        console.error("Error reading file:", error);
-        res.status(500).json({error: "Server error while reading data."});
-    }
+mongoose
+    .connect("mongodb://127.0.0.1:27017/food-donation")
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((error) => {
+        console.error("Error connecting to MongoDB:", error);
+    });
+
+const User = mongoose.model("user", userSchema);
+
+app.get("/", async (req, res) => {
+    const allDbUsers = await User.find({});
+    const html = `
+    <ul>
+        ${allDbUsers
+            .map((user) => `<li>${user.name} - ${user.email}</li>`)
+            .join("")}
+    </ul>`;
+    res.send(html);
 });
 
-app.post("/", (req, res) => {
-    const {name, email, phone, college, semester} = req.body;
+app.post("/", async (req, res) => {
+    const /*{name, email, phone, college, semester}*/ body = req.body;
 
-    if (!name || !email || !phone || !college || !semester) {
-        return res.status(400).json({error: "All fields are required"});
-    }
+    const result = await User.create({
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+        college: body.college,
+        semester: body.semester,
+    });
 
-    try {
-        const data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
-
-        const newUser = {
-            id: data.length + 1,
-            fullName: name,
-            email,
-            phone,
-            college,
-            semester,
-        };
-
-        data.push(newUser);
-        fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 4));
-
-        res.status(201).json({
-            message: "Registration successful!",
-            user: newUser,
-        });
-    } catch (error) {
-        console.error("Error writing to file:", error);
-        res.status(500).json({error: "Server error while saving data."});
-    }
+    console.log(result);
+    res.status(201).json(result);
 });
 
-// Start the server
+app.route("/:id")
+    .get(async (req, res) => {
+        const user = await User.findById(req.params.id);
+        res.send(user);
+    })
+    .delete(async (req, res) => {
+        const user = await User.findByIdAndDelete(req.params.id);
+        console.log("Deleted");
+        res.send(`Deleted user with id ${req.params.id}`);
+    });
+
 app.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
 });
